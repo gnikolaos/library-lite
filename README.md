@@ -1,2 +1,2 @@
-# library-lite
-lIlI
+# library-lite - lIlI
+playing with go + htmx
