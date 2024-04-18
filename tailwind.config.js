@@ -2,7 +2,12 @@
 module.exports = {
     content: ["internal/templates/**/*.templ"],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: "#d3cabb", // Light beige
+                accent: "#a39171", // Light brown
+            },
+        },
     },
     plugins: [
         require("@tailwindcss/forms"),
