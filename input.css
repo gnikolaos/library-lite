@@ -1,3 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    h1,
+    h2,
+    h3 {
+        @apply font-acme leading-5 tracking-wide;
+    }
+
+    a {
+        @apply hover:text-orange-400;
+    }
+
+    nav a {
+        @apply font-acme;
+    }
+}
