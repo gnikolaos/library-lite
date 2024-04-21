@@ -9,6 +9,7 @@ module.exports = {
             colors: {
                 primary: "#d3cabb", // Light beige
                 accent: "#a39171", // Light brown
+                cream: "#efe5da", // Cream like
             },
         },
     },

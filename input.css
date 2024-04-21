@@ -18,3 +18,14 @@
         @apply font-acme;
     }
 }
+
+@layer components {
+    .auth .my-indicator {
+        @apply hidden;
+    }
+
+    .auth .htmx-request .my-indicator,
+    .auth .htmx-request.my-indicator {
+        @apply inline;
+    }
+}
