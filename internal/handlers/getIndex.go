@@ -2,10 +2,9 @@ package handlers
 
 import (
 	"context"
+	"github.com/dizars1776/library-lite/internal/templates"
 	"github.com/labstack/echo/v4"
 	"os"
-
-	"github.com/dizars1776/library-lite/internal/templates"
 )
 
 func Index(c echo.Context) error {

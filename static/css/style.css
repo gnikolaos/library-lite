@@ -793,6 +793,11 @@ nav a{
   margin-right: 0.25rem;
 }
 
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .mb-1{
   margin-bottom: 0.25rem;
 }
@@ -848,10 +853,6 @@ nav a{
 
 .h-full{
   height: 100%;
-}
-
-.h-\[calc\(100\%-64px\)\]{
-  height: calc(100% - 64px);
 }
 
 .max-h-6{
@@ -934,6 +935,10 @@ nav a{
 
 .gap-2{
   gap: 0.5rem;
+}
+
+.gap-4{
+  gap: 1rem;
 }
 
 .gap-5{
@@ -1082,6 +1087,11 @@ nav a{
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .text-5xl{
   font-size: 3rem;
   line-height: 1;
@@ -1132,6 +1142,11 @@ nav a{
 .text-gray-800{
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+.text-primary{
+  --tw-text-opacity: 1;
+  color: rgb(211 202 187 / var(--tw-text-opacity));
 }
 
 .text-red-600{
@@ -1206,18 +1221,6 @@ nav a{
   outline-offset: 2px;
 }
 
-.focus\:outline-2:focus{
-  outline-width: 2px;
-}
-
-.focus\:outline-accent:focus{
-  outline-color: #a39171;
-}
-
-.focus\:outline-primary:focus{
-  outline-color: #d3cabb;
-}
-
 .focus\:outline-white:focus{
   outline-color: #fff;
 }
@@ -1237,11 +1240,6 @@ nav a{
 .focus\:ring-accent:focus{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(163 145 113 / var(--tw-ring-opacity));
-}
-
-.focus\:ring-primary:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(211 202 187 / var(--tw-ring-opacity));
 }
 
 @media not all and (min-width: 1024px){
