@@ -22,27 +22,27 @@ templ Nav() {
 		<section
 			class="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-10 border-gray-200 border-b lg:min-h-[80px] max-lg:min-h-[60px]"
 		>
-			<a href="javascript:void(0)">
+			<a href="/">
 				<img src="/img/logo/lili-high-resolution-logo-transparent.webp " alt="logo" class="md:w-[170px] w-36"/>
 			</a>
-			<div class="space-x-6 md:absolute md:right-10 flex items-center max-md:ml-auto">
-				<div class="inline-block border-gray-300 border-l-2 pl-6 cursor-pointer">
-					<svg
-						class="w-6 h-6 text-gray-800"
-						aria-hidden="true"
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						fill="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-							clip-rule="evenodd"
-						></path>
-					</svg>
-				</div>
+			<div hx-boost="true" class="md:absolute md:right-10 flex items-end gap-2 max-md:ml-auto">
+				<a
+					href="/auth/login"
+					hx-target="body"
+					hx-swap="innerHTML"
+					class="hover:text-accent text-gray-600 font-bold text-[15px] transition-colors"
+				>
+					Log in
+				</a>
+				<span class="text-neutral-500">|</span>
+				<a
+					href="/auth/signup"
+					hx-target="body"
+					hx-swap="innerHTML"
+					class="hover:text-accent text-gray-600 font-bold text-[15px] transition-colors"
+				>
+					Sign up
+				</a>
 			</div>
 		</section>
 		<nav class="flex flex-wrap py-3.5 px-10 overflow-x-auto">
@@ -66,39 +66,54 @@ templ Nav() {
 					class="lg:flex lg:justify-center lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50"
 				>
 					<li class="mb-6 hidden max-lg:block">
-						<a href="javascript:void(0)">
+						<a href="/">
 							<img src="/img/logo/lili-high-resolution-logo-transparent.webp" alt="logo" class="w-36"/>
 						</a>
 					</li>
 					<li class="max-lg:border-b max-lg:py-3">
 						<a
-							href="javascript:void(0)"
-							class="hover:text-accent text-accent font-bold text-lg block"
-						>Patrons</a>
+							href="/section1"
+							class="hover:text-accent text-gray-400 font-bold text-lg block transition-colors"
+						>
+							Section
+							1
+						</a>
 					</li>
 					<li class="max-lg:border-b max-lg:py-3">
 						<a
-							href="javascript:void(0)"
-							class="hover:text-accent text-gray-400 font-bold text-lg block"
-						>Books</a>
+							href="/section2"
+							class="hover:text-accent text-gray-400 font-bold text-lg block transition-colors"
+						>
+							Section
+							2
+						</a>
 					</li>
 					<li class="max-lg:border-b max-lg:py-3">
 						<a
-							href="javascript:void(0)"
-							class="hover:text-accent text-gray-400 font-bold text-lg block"
-						>Loans</a>
+							href="/section3"
+							class="hover:text-accent text-gray-400 font-bold text-lg block transition-colors"
+						>
+							Section
+							3
+						</a>
 					</li>
 					<li class="max-lg:border-b max-lg:py-3">
 						<a
-							href="javascript:void(0)"
-							class="hover:text-accent text-gray-400 font-bold text-lg block"
-						>Reports</a>
+							href="/section4"
+							class="hover:text-accent text-gray-400 font-bold text-lg block transition-colors"
+						>
+							Section
+							4
+						</a>
 					</li>
 					<li class="max-lg:border-b max-lg:py-3">
 						<a
-							href="javascript:void(0)"
-							class="hover:text-accent text-gray-400 font-bold text-lg block"
-						>Settings</a>
+							href="/section5"
+							class="hover:text-accent text-gray-400 font-bold text-lg block transition-colors"
+						>
+							Section
+							5
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -118,18 +133,18 @@ templ Nav() {
 }
 
 templ Footer() {
-	<footer class="py-5 sm:px-16 px-6">
+	<footer class="py-6 sm:px-16 px-6">
 		<div class="flex flex-col gap-1 lg:gap-0 lg:flex-row justify-center items-center lg:justify-between">
 			<p class="text-base text-center lg:text-left">
 				© { strconv.Itoa(time.Now().Year()) }
-				<a href="/" target="_blank" class="mx-1">
+				<a href="/" target="_blank" class="mx-1 hover:text-accent transition-colors">
 					Library
 					Lite
 				</a>All
 				Rights Reserved.
 			</p>
 			<a
-				class="justify-center flex-wrap text-base lg:justify-end"
+				class="justify-center flex-wrap text-base lg:justify-end hover:text-accent transition-colors"
 				href="https://gnikolaos.gr"
 				target="_blank"
 				class="mx-1"

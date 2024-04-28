@@ -1,24 +1,51 @@
 package routes
 
 import (
+	"github.com/dizars1776/library-lite/internal/auth"
 	"github.com/dizars1776/library-lite/internal/handlers"
+	"github.com/dizars1776/library-lite/internal/store"
 	"github.com/labstack/echo/v4"
 )
 
-func RegisterRoutes(e *echo.Echo) {
+type App struct {
+	Store *store.Store
+}
+
+func (app *App) RegisterRoutes(e *echo.Echo) {
+
+	auth := auth.NewAuth(app.Store)
+
 	// Index page accessible to all users
-	e.GET("/", handlers.HomeHandler)
+	e.GET("/", handlers.Home)
 
+	// AUTH ROUTES
+	authHandler := handlers.NewAuthHandler(app.Store)
+	authGroup := e.Group("/auth")
+	authGroup.GET("/login", authHandler.Login)
+	authGroup.POST("/login", auth.Login)
+	authGroup.GET("/signup", authHandler.Singup)
+
+	// ADMIN ROUTES
+	adminHandler := handlers.NewAdminHandler(app.Store)
 	adminGroup := e.Group("/admin")
-	//	adminGroup.Use(RoleMiddleware("admin"))
-	e.GET("/admin", handlers.Aadmin)
+	adminGroup.Use(auth.Middleware())
+	adminGroup.GET("/", adminHandler.Dashboard)
+	adminGroup.GET("/books", adminHandler.Books)
+	adminGroup.GET("/users", adminHandler.Users)
 
+	// LIBRARIAN ROUTES
+	librarianHandler := handlers.NewLibrarianHandler(app.Store)
 	librarianGroup := e.Group("/librarian")
-	//	librarianGroup.Use(RoleMiddleware("admin", "librarian"))
-	e.GET("/librarian/books", handlers.Lbooks)
-	e.GET("/librarian/patrons", handlers.Lpatrons)
+	librarianGroup.Use(auth.Middleware())
+	librarianGroup.GET("/librarian/books", librarianHandler.Books)
+	librarianGroup.GET("/librarian/patrons", librarianHandler.Patrons)
 
-	patron := e.Group("/patron")
-	//	patron.Use(RoleMiddleware("admin", "librarian", "patron"))
-	e.GET("/patron", handlers.Ppatron)
+	// PATRON ROUTES
+	patronHandler := handlers.NewPatronHandler(app.Store)
+	patronGroup := e.Group("/patron")
+	patronGroup.Use(auth.Middleware())
+	patronGroup.GET("/patron", patronHandler.Dashboard)
+
+	// MISC
+	e.GET("/*", handlers.NotFound)
 }

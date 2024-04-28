@@ -1,0 +1,41 @@
+package errors
+
+import "github.com/dizars1776/library-lite/internal/templates/layout"
+
+templ NotFound() {
+	@layout.ErrorIndex("lIlI - Page Not Found") {
+		<div class="font-sans text-[#333] mx-auto max-w-6xl max-md:max-w-md">
+			<div class="grid md:grid-cols-2 h-full justify-center md:items-center md:gap-8 gap-6">
+				<div class="max-md:order-1 max-md:text-center">
+					<p class="text-sm font-bold text-primary mb-2">
+						<span class="rotate-90 inline-block mr-2">|</span>Adventure not found!
+					</p>
+					<h1 class="md:text-6xl text-3xl font-extrabold mb-4 md:!leading-[55px]">404</h1>
+					<p class="mt-4 text-base text-gray-500 leading-relaxed">
+						Perhaps you'd like to embark on a different reading journey?
+					</p>
+					<div class="mt-10">
+						<button
+							hx-get="/"
+							hx-target="body"
+							hx-push-url="true"
+							type="button"
+							class="bg-primary hover:bg-accent text-white hover:text-white font-bold text-sm rounded-full px-6 py-2.5 transition-colors"
+						>
+							Return to Home
+						</button>
+					</div>
+				</div>
+				<div
+					class="lg:h-[650px] md:h-[550px] flex items-center relative max-md:before:hidden before:absolute before:bg-cream before:h-full before:w-3/4 before:right-0 before:z-0"
+				>
+					<img
+						src="/img/errors/book-falling.jpg"
+						class="rounded-md lg:w-3/4 md:w-11/12 z-50 h-[80%] relative object-cover"
+						alt="Book falling"
+					/>
+				</div>
+			</div>
+		</div>
+	}
+}

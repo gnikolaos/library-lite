@@ -1,0 +1,10 @@
+package layout
+
+templ ErrorIndex(title string) {
+	@Header(title)
+	<body class="flex flex-col h-full">
+		<main id="main" class="flex-1 container mx-auto w-full">
+			{ children... }
+		</main>
+	</body>
+}

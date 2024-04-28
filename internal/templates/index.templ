@@ -1,24 +1,23 @@
 package templates
 
 import "github.com/dizars1776/library-lite/internal/templates/layout"
-import "github.com/dizars1776/library-lite/internal/templates/components"
 
 templ Index(contents templ.Component, title string) {
 	@layout.Header(title)
 	<body class="flex flex-col h-full">
 		@layout.Nav()
-		<main class="flex-1 w-full lg:container lg:mx-auto">
+		<main id="main" class="flex-1 w-full">
 			@contents
 		</main>
 		@layout.Footer()
 	</body>
 }
 
-templ AuthIndex(title string) {
+templ AuthIndex(contents templ.Component, title string) {
 	@layout.Header(title)
 	<body class="flex flex-col h-full">
-		<main class="flex-1 w-full lg:container lg:mx-auto">
-			@components.LoginForm()
+		<main id="main" class="flex-1 w-full lg:container lg:mx-auto">
+			@contents
 		</main>
 		@layout.Footer()
 	</body>

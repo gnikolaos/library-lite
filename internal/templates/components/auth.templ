@@ -4,13 +4,13 @@ templ LoginForm() {
 	<div
 		class="auth h-full flex flex-col gap-10 lg:flex-row-reverse mt-8 lg:mt-0 justify-start lg:justify-center items-center"
 	>
-		<div class="w-64 h-fit">
+		<div hx-get="/" hx-target="body" hx-push-url="true" class="w-64 h-fit cursor-pointer">
 			<img src="/img/logo/lili-high-resolution-logo-transparent.webp" alt="logo" class="h-full w-full"/>
 		</div>
 		<div class="flex-shrink-0 w-full max-w-md px-1 lg:px-0" hx-ext="response-targets">
 			<form
 				class="px-4 py-8 lg:px-8 lg:py-14 m-0 rounded-2xl shadow-xl bg-cream"
-				hx-post="/auth/login/"
+				hx-post="/auth/login"
 				hx-target-error="#errorMessage"
 				hx-swap="innerHTML"
 				hx-indicator="#spinner"
@@ -54,10 +54,10 @@ templ LoginForm() {
 						/>
 					</label>
 				</div>
-				<div class="mt-6">
-					<i id="errorMessage" class="text-red-600 h-6 max-h-6 mb-1"></i>
+				<div class="mt-6 flex flex-col gap-2">
+					<i id="errorMessage" class="text-red-600 h-6 max-h-6 mb-1 text-sm"></i>
 					<button
-						class="px-8 py-2.5 bg-accent text-sm text-white rounded-md hover:bg-accent/75 focus:outline-white"
+						class="px-8 py-2.5 w-fit bg-accent text-sm text-white rounded-md hover:bg-accent focus:outline-white"
 						type="submit"
 						value="submit"
 					>
@@ -74,7 +74,7 @@ templ SignupForm() {
 	<div
 		class="auth h-full flex flex-col gap-10 lg:flex-row-reverse mt-8 lg:mt-0 justify-start lg:justify-center items-center"
 	>
-		<div class="w-64 h-fit">
+		<div hx-get="/" hx-target="body" hx-push-url="true" class="w-64 h-fit cursor-pointer">
 			<img src="/img/logo/lili-high-resolution-logo-transparent.webp" alt="logo" class="h-full w-full"/>
 		</div>
 		<div class="flex-shrink-0 w-full max-w-md px-1 lg:px-0" hx-ext="response-targets">

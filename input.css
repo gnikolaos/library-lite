@@ -4,15 +4,16 @@
 @tailwind utilities;
 
 @layer base {
+
     h1,
     h2,
     h3 {
         @apply font-acme leading-5 tracking-wide;
     }
 
-    a {
+    /* a {
         @apply hover:text-orange-400;
-    }
+    } */
 
     nav a {
         @apply font-acme;
