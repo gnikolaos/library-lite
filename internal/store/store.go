@@ -31,15 +31,15 @@ func (s *Store) CreateTables() error {
 	_, err := s.db.Exec(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
+            role INTEGER NOT NULL,
             email TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL,
-            role TEXT NOT NULL,
             name TEXT NOT NULL,
             surname TEXT NOT NULL,
+            password TEXT NOT NULL,
             created_at DATETIME NOT NULL
         );
         CREATE TABLE IF NOT EXISTS roles (
-            id INTEGER PRIMARY KEY,
+            id INTEGER NOT NULL,
             name TEXT NOT NULL
         );
         CREATE TABLE IF NOT EXISTS books (
@@ -81,10 +81,10 @@ func (s *Store) CreateTables() error {
 
 func (s *Store) Seed() error {
 	_, err := s.db.Exec(`
-        INSERT INTO roles (name) VALUES ('admin');
-        INSERT INTO roles (name) VALUES ('librarian');
-        INSERT INTO roles (name) VALUES ('patron');
-        INSERT INTO roles (name) VALUES ('user');
+        INSERT INTO roles (id, name) VALUES (99, 'admin');
+        INSERT INTO roles (id, name) VALUES (89, 'librarian');
+        INSERT INTO roles (id, name) VALUES (9, 'patron');
+        INSERT INTO roles (id, name) VALUES (1, 'user');
     `)
 	if err != nil {
 		return err
@@ -92,8 +92,8 @@ func (s *Store) Seed() error {
 
 	// password = password
 	_, err = s.db.Exec(`
-        INSERT INTO users (email, password, role, name, surname, created_at) VALUES
-            ('admin@lili.com', '$2a$08$xi46/MHHyZMz2.XHmlI1cemjyO.j48YKAgXEx9jW6ZqBdujg6x/GO', 1, 'Lili', 'Doe', datetime('now', 'localtime'));
+        INSERT INTO users (role, email, name, surname, password, created_at) VALUES
+            (99, 'admin@lili.com','Lili', 'Doe', '$2a$08$xi46/MHHyZMz2.XHmlI1cemjyO.j48YKAgXEx9jW6ZqBdujg6x/GO', datetime('now', 'localtime'));
     `)
 	if err != nil {
 		return err

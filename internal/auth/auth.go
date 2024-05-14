@@ -2,47 +2,106 @@ package auth
 
 import (
 	"net/http"
+	"os"
+	"strconv"
+	"time"
 
 	"github.com/dizars1776/library-lite/internal/services"
-	"github.com/dizars1776/library-lite/internal/store"
+	"github.com/golang-jwt/jwt"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo/v4"
-	"golang.org/x/crypto/bcrypt"
 )
 
-type Auth struct {
-	store *store.Store
+var (
+	jwtSecretKey          string
+	accessTokenCookieName string
+)
+
+func init() {
+	accessTokenCookieName = os.Getenv("ACCESSTOKENCOOKIENAME")
+	jwtSecretKey = os.Getenv("JWTSECRETKEY")
 }
 
-func NewAuth(store *store.Store) *Auth {
-	return &Auth{store: store}
+func GetJWTSecret() string {
+	return jwtSecretKey
 }
 
-func (a *Auth) Login(c echo.Context) error {
-	email := c.FormValue("email")
-	password := c.FormValue("password")
-	// rememberMe := c.FormValue("rememberMe")
-	// TODO: add JWT
+type Claims struct {
+	jwt.StandardClaims
+}
 
-	var user services.User
-
-	err := a.store.DB().QueryRow("SELECT id, email, name, surname, password, role FROM users WHERE email = ?", email).Scan(&user.ID, &user.Email, &user.Name, &user.Surname, &user.Password, &user.Role)
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+func GenerateTokensAndSetCookies(user *services.User, c echo.Context) error {
+	accessToken, exp, err := generateAccessToken(user)
 	if err != nil {
-		return c.String(http.StatusUnauthorized, "- Wrong credentials, please try again")
+		return err
 	}
 
-	c.Set("user", user)
-	// TODO: get the user role from the user service
-	c.Response().Header().Set("HX-Redirect", "/"+user.Role)
+	setTokenCookie(accessTokenCookieName, accessToken, exp, c)
+	setUserCookie(user, exp, c)
 
 	return nil
 }
 
-// TODO: role Middleware
-func (a *Auth) Middleware() echo.MiddlewareFunc {
-	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			return c.Redirect(http.StatusSeeOther, "/auth/login")
-		}
-	}
+func generateAccessToken(user *services.User) (string, time.Time, error) {
+	expirationTime := time.Now().Add(1 * time.Hour)
+
+	return generateToken(user, expirationTime, []byte(GetJWTSecret()))
 }
+
+func generateToken(user *services.User, expirationTime time.Time, secret []byte) (string, time.Time, error) {
+	claims := &Claims{
+		StandardClaims: jwt.StandardClaims{
+			Issuer:    "lily-app",
+			Subject:   user.Name,
+			Audience:  strconv.Itoa(user.RoleId),
+			ExpiresAt: expirationTime.Unix(),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	tokenString, err := token.SignedString(secret)
+	if err != nil {
+		return "", time.Now(), err
+	}
+
+	return tokenString, expirationTime, nil
+}
+
+func setTokenCookie(name, token string, expiration time.Time, c echo.Context) {
+	cookie := new(http.Cookie)
+	cookie.Name = name
+	cookie.Value = token
+	cookie.Expires = expiration
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+
+	c.SetCookie(cookie)
+}
+
+// Purpose: save the user's name and other details later on
+func setUserCookie(user *services.User, expiration time.Time, c echo.Context) {
+	cookie := new(http.Cookie)
+	cookie.Name = "user"
+	cookie.Value = user.Name
+	cookie.Expires = expiration
+	cookie.Path = "/"
+
+	c.SetCookie(cookie)
+}
+
+// Executes when user tries to access a protected path
+func JWTErrorChecker(err error, c echo.Context) error {
+	return c.Redirect(http.StatusSeeOther, "/auth/login")
+}
+
+// TODO: role Middleware
+// func (u *Auth) Middleware() echo.MiddlewareFunc {
+// 	return func(next echo.HandlerFunc) echo.HandlerFunc {
+// 		return func(c echo.Context) error {
+// 			return c.Redirect(http.StatusSeeOther, "/auth/login")
+// 		}
+// 	}
+// }
+
+// Credits: https://webdevstation.com/posts/user-authentication-with-go-using-jwt-token/

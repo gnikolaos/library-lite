@@ -24,3 +24,5 @@ bin
 tmp
 *.db
 tailwindcss
+
+.env
