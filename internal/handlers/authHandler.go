@@ -43,22 +43,22 @@ func (h *AuthHandler) PostLogin(c echo.Context) error {
 	password := c.FormValue("password")
 
 	userService := services.NewUserService(h.store)
-	fmt.Println(email, password)
+
 	loggedInUser, err := userService.LoginUser(email, password)
 	if err != nil {
 		fmt.Println(err)
-		return echo.NewHTTPError(http.StatusUnauthorized, "Invalid Credentials!")
+		return c.HTML(http.StatusUnauthorized, "Invalid Credentials!")
 	}
 
 	err = auth.GenerateTokensAndSetCookies(loggedInUser, c)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusUnauthorized, "Token generation failed!")
+		return c.HTML(http.StatusUnauthorized, "Token generation failed!")
 	}
 
 	userRole, err := userService.GetRoleName(loggedInUser.RoleId)
 	if err != nil {
 		fmt.Println(err)
-		return echo.NewHTTPError(http.StatusUnauthorized, "Invalid user role.")
+		return c.HTML(http.StatusUnauthorized, "Invalid user role.")
 	}
 
 	c.Response().Header().Add("HX-Redirect", "/"+userRole)

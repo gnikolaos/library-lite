@@ -27,7 +27,7 @@ func (app *App) RegisterRoutes(e *echo.Echo) {
 	adminHandler := handlers.NewAdminHandler(app.Store)
 	adminGroup := e.Group("/admin")
 	//adminGroup.Use(auth.Middleware())
-	adminGroup.GET("/", adminHandler.Dashboard)
+	adminGroup.GET("", adminHandler.Dashboard)
 	adminGroup.GET("/books", adminHandler.Books)
 	adminGroup.GET("/users", adminHandler.Users)
 
