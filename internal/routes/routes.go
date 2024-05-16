@@ -1,8 +1,10 @@
 package routes
 
 import (
+	"github.com/dizars1776/library-lite/internal/auth"
 	"github.com/dizars1776/library-lite/internal/handlers"
 	"github.com/dizars1776/library-lite/internal/store"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,7 +28,12 @@ func (app *App) RegisterRoutes(e *echo.Echo) {
 	// ADMIN ROUTES
 	adminHandler := handlers.NewAdminHandler(app.Store)
 	adminGroup := e.Group("/admin")
-	//adminGroup.Use(auth.Middleware())
+	// Guarded group
+	adminGroup.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey:   []byte(auth.GetJWTSecret()),
+		TokenLookup:  "cookie:access-token", // "<source>:<name>"
+		ErrorHandler: auth.JWTErrorHandler,
+	}))
 	adminGroup.GET("", adminHandler.Dashboard)
 	adminGroup.GET("/books", adminHandler.Books)
 	adminGroup.GET("/users", adminHandler.Users)

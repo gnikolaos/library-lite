@@ -38,9 +38,10 @@ func (h *AuthHandler) GetSingup(c echo.Context) error {
 }
 
 func (h *AuthHandler) PostLogin(c echo.Context) error {
-	// TODO: sanitize the values, add some checks
+	// TODO: sanitize the values, add some checks, implement the rememberMe
 	email := c.FormValue("email")
 	password := c.FormValue("password")
+	// rememberMe := c.FormValue("rememberMe")
 
 	userService := services.NewUserService(h.store)
 

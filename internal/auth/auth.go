@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -91,7 +92,8 @@ func setUserCookie(user *services.User, expiration time.Time, c echo.Context) {
 }
 
 // Executes when user tries to access a protected path
-func JWTErrorChecker(err error, c echo.Context) error {
+func JWTErrorHandler(c echo.Context, err error) error {
+	fmt.Println("Unauthenticated request.", err)
 	return c.Redirect(http.StatusSeeOther, "/auth/login")
 }
 
