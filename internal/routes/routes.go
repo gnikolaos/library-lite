@@ -20,8 +20,9 @@ func (app *App) RegisterRoutes(e *echo.Echo) {
 	// AUTH ROUTES
 	authHandler := handlers.NewAuthHandler(app.Store)
 	authGroup := e.Group("/auth")
-	authGroup.GET("/login", authHandler.GetLogin)
+	authGroup.GET("/login", authHandler.GetLogin).Name = "userLogInForm"
 	authGroup.GET("/signup", authHandler.GetSingup)
+	authGroup.GET("/logout", authHandler.GetLogout)
 
 	authGroup.POST("/login", authHandler.PostLogin)
 
@@ -30,10 +31,12 @@ func (app *App) RegisterRoutes(e *echo.Echo) {
 	adminGroup := e.Group("/admin")
 	// Guarded group
 	adminGroup.Use(echojwt.WithConfig(echojwt.Config{
-		SigningKey:   []byte(auth.GetJWTSecret()),
-		TokenLookup:  "cookie:access-token", // "<source>:<name>"
-		ErrorHandler: auth.JWTErrorHandler,
+		NewClaimsFunc: auth.GetJWTCustomClaims,
+		SigningKey:    []byte(auth.GetJWTSecret()),
+		TokenLookup:   "cookie:" + auth.AccessTokenCookieName, // "<source>:<name>"
+		ErrorHandler:  auth.JWTErrorHandler,
 	}))
+	adminGroup.Use(auth.TokenRefreshMiddleware)
 	adminGroup.GET("", adminHandler.Dashboard)
 	adminGroup.GET("/books", adminHandler.Books)
 	adminGroup.GET("/users", adminHandler.Users)

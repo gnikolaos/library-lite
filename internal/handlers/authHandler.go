@@ -38,10 +38,10 @@ func (h *AuthHandler) GetSingup(c echo.Context) error {
 }
 
 func (h *AuthHandler) PostLogin(c echo.Context) error {
-	// TODO: sanitize the values, add some checks, implement the rememberMe
+	// TODO: sanitize the values, add some checks
 	email := c.FormValue("email")
 	password := c.FormValue("password")
-	// rememberMe := c.FormValue("rememberMe")
+	rememberMe := c.FormValue("rememberMe") == "on"
 
 	userService := services.NewUserService(h.store)
 
@@ -51,7 +51,7 @@ func (h *AuthHandler) PostLogin(c echo.Context) error {
 		return c.HTML(http.StatusUnauthorized, "Invalid Credentials!")
 	}
 
-	err = auth.GenerateTokensAndSetCookies(loggedInUser, c)
+	err = auth.GenerateTokensAndSetCookies(loggedInUser, rememberMe, c)
 	if err != nil {
 		return c.HTML(http.StatusUnauthorized, "Token generation failed!")
 	}
@@ -63,6 +63,26 @@ func (h *AuthHandler) PostLogin(c echo.Context) error {
 	}
 
 	c.Response().Header().Add("HX-Redirect", "/"+userRole)
+
+	return nil
+}
+
+func (h *AuthHandler) GetLogout(c echo.Context) error {
+	accessTokenCookie, err := c.Cookie(auth.AccessTokenCookieName)
+	if err == nil {
+		accessTokenCookie.Path = "/"
+		accessTokenCookie.MaxAge = -1
+		c.SetCookie(accessTokenCookie)
+	}
+
+	refreshTokenCookie, err := c.Cookie(auth.RefreshTokenCookieName)
+	if err == nil {
+		refreshTokenCookie.Path = "/"
+		refreshTokenCookie.MaxAge = -1
+		c.SetCookie(refreshTokenCookie)
+	}
+
+	c.Response().Header().Add("HX-Redirect", "/")
 
 	return nil
 }
