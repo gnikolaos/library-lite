@@ -4,6 +4,11 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        --primary: "#gd3cabb"; /* Light beige */
+        --accent: "#a39171"; /* Light brown */
+        --cream: "#efe5da"; /* Cream like */
+    }
 
     h1,
     h2,

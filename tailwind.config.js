@@ -7,9 +7,9 @@ module.exports = {
                 acme: ["acme", "sans-serif"],
             },
             colors: {
-                primary: "#d3cabb", // Light beige
-                accent: "#a39171", // Light brown
-                cream: "#efe5da", // Cream like
+                primary: "var(--primary)", // Light beige
+                accent: "var(--accent)", // Light brown
+                cream: "var(--cream)", // Cream like
             },
         },
     },
