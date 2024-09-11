@@ -26,3 +26,5 @@ tmp
 tailwindcss
 
 .env
+
+.DS_STORE
