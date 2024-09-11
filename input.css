@@ -1,13 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+    @font-face {
+        font-family: "Acme";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(/fonts/Acme-regular.ttf) format("ttf");
+    }
+
     :root {
-        --primary: "#gd3cabb"; /* Light beige */
-        --accent: "#a39171"; /* Light brown */
-        --cream: "#efe5da"; /* Cream like */
+        --color-primary: 38deg 21% 78%; /* Light beige */
+        --color-accent: 38deg 21% 54%; /* Light brown */
+        --color-cream: 31deg 40% 90%; /* Cream like */
     }
 
     h1,
