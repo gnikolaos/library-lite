@@ -31,3 +31,9 @@ tailwind-update:
 	chmod +x $(TWCLI_FILENAME)
 	mv $(TWCLI_FILENAME) tailwindcss
 
+# TODO: replace the specified htmx version with latest when latest will actually be the latest!
+.PHONY: htmx-update
+htmx-update:
+	curl --output-dir "./static/js/vendors" -sLO https://unpkg.com/htmx.org@2.0.2/dist/htmx.min.js
+	curl --output-dir "./static/js/vendors" -sLO https://unpkg.com/htmx-ext-response-targets@latest/response-targets.js
+

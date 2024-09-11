@@ -14,7 +14,7 @@ templ LoginForm() {
 				hx-target-error="#errorMessage"
 				hx-swap="innerHTML"
 				hx-indicator="#spinner"
-				hx-on::after-request="this.reset()"
+				hx-on:htmx:after-request="this.reset()"
 			>
 				<h1 class="text-5xl font-bold pb-6 text-center">Log in now!</h1>
 				<div class="relative flex items-center py-2">
@@ -84,7 +84,7 @@ templ SignupForm() {
 				hx-target-error="#errorMessage"
 				hx-swap="innerHTML"
 				hx-indicator="#spinner"
-				hx-on::after-request="this.reset()"
+				hx-on:htmx:after-request="this.reset()"
 			>
 				<h1 class="text-5xl font-bold pb-6 text-center">Sing up now!</h1>
 				<div class="relative flex items-center py-2">
