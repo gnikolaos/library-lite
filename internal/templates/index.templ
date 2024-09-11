@@ -3,22 +3,28 @@ package templates
 import "github.com/dizars1776/library-lite/internal/templates/layout"
 
 templ Index(contents templ.Component, title string) {
+    <!DOCTYPE html>
+    <html lang="en">
 	@layout.Header(title)
-	<body class="flex flex-col h-full">
+	<body class="flex flex-col h-screen">
 		@layout.Nav()
 		<main id="main" class="flex-1 w-full">
 			@contents
 		</main>
 		@layout.Footer()
 	</body>
+    </html>
 }
 
 templ AuthIndex(contents templ.Component, title string) {
+    <!DOCTYPE html>
+    <html lang="en">
 	@layout.Header(title)
-	<body class="flex flex-col h-full">
+	<body class="flex flex-col h-screen">
 		<main id="main" class="flex-1 w-full lg:container lg:mx-auto">
 			@contents
 		</main>
 		@layout.Footer()
 	</body>
+    </html>
 }
